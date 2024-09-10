@@ -2,8 +2,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { KafkaModule } from '@app/kafka';
+import { AppConfigModule } from '@app/config';
+import { TestConsumer } from './consumer';
 @Module({
   imports: [
+    KafkaModule,
+    AppConfigModule,
     ClientsModule.register([
       {
         name: 'BILLING_SERVICE',
@@ -21,6 +26,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TestConsumer],
 })
 export class AppModule { }
